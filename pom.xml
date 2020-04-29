@@ -6,6 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.5.RELEASE</version>
+		<!-- <version>1.4.4.RELEASE</version> -->
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.fb</groupId>
@@ -39,6 +40,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<!-- <version>1.4.4.RELEASE</version> -->
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+			<!-- <version>1.4.4.RELEASE</version> -->
 		</dependency>
 
 		<!-- excel -->
@@ -57,7 +65,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.11</version>
+			<!-- <version>5.1.40</version> -->
 		</dependency>
 	</dependencies>
 

@@ -4,11 +4,11 @@ import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
 
-import com.fb.springbootdemo.model.Staff;
+import com.fb.springbootdemo.model.Department;
 
-public interface StaffService {
-	Staff save(Staff staff);
-	
+public interface DepartmentService {
+	Department saveDepartment(Department department);
+
 	Map<String, Object> importData(Workbook wb);
 
 }
