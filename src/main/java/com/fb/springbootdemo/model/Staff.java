@@ -1,7 +1,5 @@
 package com.fb.springbootdemo.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -10,18 +8,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fb.springbootdemo.base.CommonModel;
 
 @Entity
 @Table(name = "staff")
 @EntityListeners(AuditingEntityListener.class)
-public class Staff {
+public class Staff extends CommonModel{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "sta_id", nullable = false)
-	private String staId;
+	private Integer staId;
 
 	@Column(name = "sta_code", nullable = false)
 	private String staCode;
@@ -37,26 +35,13 @@ public class Staff {
 
 	@Column(name = "dep_name")
 	private String depName;
+	
 
-	@Column(name = "create_by")
-	private Integer createBy;
-
-	@Column(name = "create_date")
-	@CreatedDate
-	private Date createDate = new Date();
-
-	@Column(name = "update_by")
-	private Integer updateBy;
-
-	@Column(name = "update_date")
-	@LastModifiedDate
-	private Date updateDate = new Date();
-
-	public String getStaId() {
+	public Integer getStaId() {
 		return staId;
 	}
 
-	public void setStaId(String staId) {
+	public void setStaId(Integer staId) {
 		this.staId = staId;
 	}
 
@@ -100,43 +85,10 @@ public class Staff {
 		this.depName = depName;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public Date getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
-
-	public Integer getCreateBy() {
-		return createBy;
-	}
-
-	public void setCreateBy(Integer createBy) {
-		this.createBy = createBy;
-	}
-
-	public Integer getUpdateBy() {
-		return updateBy;
-	}
-
-	public void setUpdateBy(Integer updateBy) {
-		this.updateBy = updateBy;
-	}
-
 	@Override
 	public String toString() {
 		return "Staff [staId=" + staId + ", staCode=" + staCode + ", staName=" + staName + ", depId=" + depId
-				+ ", depCode=" + depCode + ", depName=" + depName + ", createBy=" + createBy + ", createDate="
-				+ createDate + ", updateBy=" + updateBy + ", updateDate=" + updateDate + "]";
+				+ ", depCode=" + depCode + ", depName=" + depName + "]";
 	}
 
 }

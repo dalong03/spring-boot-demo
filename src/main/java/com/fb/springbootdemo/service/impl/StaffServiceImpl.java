@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -53,7 +52,6 @@ public class StaffServiceImpl implements StaffService {
 
 		Department department = departmentRepository.findByDepName(staff.getDepName());
 		staff.setDepCode(department.getDepCode());
-		staff.setStaId(UUID.randomUUID().toString().replace("-", ""));
 		return staffRepository.save(staff);
 	}
 

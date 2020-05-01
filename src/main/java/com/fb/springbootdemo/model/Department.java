@@ -1,7 +1,5 @@
 package com.fb.springbootdemo.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -10,14 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fb.springbootdemo.base.CommonModel;
 
 @Entity
 @Table(name = "department")
 @EntityListeners(AuditingEntityListener.class)
-public class Department {
+public class Department extends CommonModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,20 +36,6 @@ public class Department {
 
 	@Column(name = "parent_id")
 	private String parentId;
-
-	@Column(name = "create_by")
-	private Integer createBy;
-
-	@Column(name = "create_date")
-	@CreatedDate
-	private Date createDate;
-
-	@Column(name = "update_by")
-	private Integer updateBy;
-
-	@Column(name = "update_date")
-	@LastModifiedDate
-	private Date updateDate;
 
 	public Integer getDepId() {
 		return depId;
@@ -101,43 +85,9 @@ public class Department {
 		this.parentId = parentId;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public Date getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
-
-	public Integer getCreateBy() {
-		return createBy;
-	}
-
-	public void setCreateBy(Integer createBy) {
-		this.createBy = createBy;
-	}
-
-	public Integer getUpdateBy() {
-		return updateBy;
-	}
-
-	public void setUpdateBy(Integer updateBy) {
-		this.updateBy = updateBy;
-	}
-
 	@Override
 	public String toString() {
 		return "Department [depId=" + depId + ", depCode=" + depCode + ", depName=" + depName + ", depShortName="
-				+ depShortName + ", leader=" + leader + ", parentId=" + parentId + ", createBy=" + createBy
-				+ ", createDate=" + createDate + ", updateBy=" + updateBy + ", updateDate=" + updateDate + "]";
+				+ depShortName + ", leader=" + leader + ", parentId=" + parentId + "]";
 	}
-
 }

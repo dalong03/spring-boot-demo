@@ -34,7 +34,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	@Transactional
-	public Department saveDepartment(Department department) {
+	public Department save(Department department) {
 		return DepartmentRepository.save(department);
 	}
 

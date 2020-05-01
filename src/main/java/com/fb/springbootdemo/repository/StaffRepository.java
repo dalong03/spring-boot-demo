@@ -10,6 +10,8 @@ import com.fb.springbootdemo.model.Staff;
 
 @Repository
 public interface StaffRepository extends CrudRepository<Staff, String> {
+	Staff findByStaCode(String staCode);
+	
 	List<Staff> findByStaName(String staName);
 	
 	@Query(value = "select max(sta_code) from staff", nativeQuery = true)

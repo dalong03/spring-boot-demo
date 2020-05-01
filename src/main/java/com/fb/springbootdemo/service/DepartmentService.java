@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import com.fb.springbootdemo.model.Department;
 
 public interface DepartmentService {
-	Department saveDepartment(Department department);
+	Department save(Department department);
 
 	Map<String, Object> importData(Workbook wb);
 
