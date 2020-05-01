@@ -49,7 +49,7 @@ public class SalaryServiceImpl implements SalaryService {
 	}
 
 	@Override
-	public Map<String, Object> importData(Workbook wb, String fileName) {
+	public Map<String, Object> importData(Workbook wb, String fileName, String flag) {
 		Map<String, Object> retMap = new HashMap<>();
 		List<Map<String, Object>> successList = new ArrayList<>();
 		List<Map<String, Object>> failureList = new ArrayList<>();
@@ -67,17 +67,12 @@ public class SalaryServiceImpl implements SalaryService {
 			throw new ServiceException(ErrorCodeEnum.INVALID_FILE_NAME);
 		}
 
-		// 获取薪水的码值
-		Map<String, Object> wageMap = new HashMap<>();
-		List<CommonCode> commonCodeList = commonCodeRepository.findByCodeField(CommonCodeConstant.WAGE_TYPE);
-		for (CommonCode code : commonCodeList) {
-			wageMap.put(code.getCodeValue(), code.getCodeKey());
-		}
-
-		Sheet sheet = wb.getSheetAt(0);
-
 		// 获取薪水发放月份
+		Sheet sheet = wb.getSheetAt(0);
 		String issueMonthStr = sheet.getSheetName();
+		if (issueMonthStr.contains("月")) {
+			issueMonthStr = issueMonthStr.replace("月", "");
+		}
 		Integer issueMonth = null;
 		try {
 			issueMonth = Integer.valueOf(issueMonthStr);
@@ -85,25 +80,49 @@ public class SalaryServiceImpl implements SalaryService {
 			throw new ServiceException(ErrorCodeEnum.INVALID_SHEET_NAME);
 		}
 
-		Row row = sheet.getRow(0);
-		int cellNum = row.getPhysicalNumberOfCells();
+		// 序号校验
+		int endRow = sheet.getPhysicalNumberOfRows();
+		for (int i = 1; i < endRow; i++) {
+			Row row = sheet.getRow(i);
+			String sequence = (String) ExcelUtils.getCellValue(row.getCell(0));
+			if (!StringUtils.hasText(sequence)) {
+				throw new ServiceException(ErrorCodeEnum.EXCEL_BLANK_VALUE);
+			}
+		}
+
+		// 获取薪水的码值
+		Map<String, Object> wageMap = new HashMap<>();
+		List<CommonCode> commonCodeList = commonCodeRepository.findByCodeField(CommonCodeConstant.WAGE_TYPE);
+		if (commonCodeList.size() == 0) {
+			throw new ServiceException(ErrorCodeEnum.INVALID_COMMON_CODE, CommonCodeConstant.WAGE);
+		}
+		for (CommonCode code : commonCodeList) {
+			wageMap.put(code.getCodeValue(), code.getCodeKey());
+		}
 
 		// 薪水类别
+		Row row = sheet.getRow(0);
+		int cellNum = row.getPhysicalNumberOfCells();
 		String[] wageTypeArray = new String[cellNum - 4];// 薪水类别数组
 		for (int i = 4; i < cellNum; i++) {
-			String wageType = (String) ExcelUtils.getCellValue(row.getCell(4));// 薪水类别
+			String wageType = (String) ExcelUtils.getCellValue(row.getCell(i));// 薪水类别
 			if (wageMap.get(wageType) == null) {
-				throw new ServiceException(ErrorCodeEnum.INVALID_COMMON_CODE);
+				throw new ServiceException(ErrorCodeEnum.INCOMPLETE_CODE, CommonCodeConstant.WAGE);
 			}
 			wageTypeArray[i - 4] = wageType;
 		}
 
-		int endRow = sheet.getPhysicalNumberOfRows();
 		for (int i = 1; i < endRow; i++) {
 			row = sheet.getRow(i);
 			if (null == row) {
 				continue;
 			}
+			
+			//反参的successList failureList所需对象
+			String sequence = (String) ExcelUtils.getCellValue(row.getCell(0));
+			Map<String, Object> salaryMap = new HashMap<>();
+			salaryMap.put("sequence", sequence);
+			
 			Cell cell1 = row.getCell(2);
 			String staCode = (String) ExcelUtils.getCellValue(cell1);
 			Staff staff = null;
@@ -117,23 +136,20 @@ public class SalaryServiceImpl implements SalaryService {
 					if (staffList.size() == 1) {
 						staff = staffList.get(0);
 					} else if (staffList.size() > 1) {
-						Map<String, Object> failureMap = new HashMap<>();
-						failureMap.put("staName", staName);
-						failureMap.put("remark", "系统内此姓名存在多个，请输入员工编号加以确认");
-						failureList.add(failureMap);
+						salaryMap.put("staName", staName);
+						salaryMap.put("remark", "系统内此姓名存在多个，请输入员工编号加以确认");
+						failureList.add(salaryMap);
 						continue;
 					} else {
-						Map<String, Object> failureMap = new HashMap<>();
-						failureMap.put("staCode", staCode);
-						failureMap.put("staName", staName);
-						failureMap.put("remark", "系统内无此人员，请先录入");
-						failureList.add(failureMap);
+						salaryMap.put("staCode", staCode);
+						salaryMap.put("staName", staName);
+						salaryMap.put("remark", "系统内无此人员，请先录入");
+						failureList.add(salaryMap);
 						continue;
 					}
 				} else {
-					Map<String, Object> failureMap = new HashMap<>();
-					failureMap.put("remark", "请录入员工编号或员工姓名");
-					failureList.add(failureMap);
+					salaryMap.put("remark", "请录入员工编号或员工姓名");
+					failureList.add(salaryMap);
 					continue;
 				}
 			}
@@ -145,31 +161,47 @@ public class SalaryServiceImpl implements SalaryService {
 			salary.setIssueYear(issueYear);
 			salary.setIssueMonth(issueMonth);
 
-			for (String wageType : wageTypeArray) {
-				Map<String, Object> staMap = new HashMap<>();
-				staMap.put("staCode", staff.getStaCode());
-				staMap.put("staName", staff.getStaName());
-
-				Cell cell3 = row.getCell(4);
-				BigDecimal wage = (BigDecimal) ExcelUtils.getCellValue(cell3);
+			for (int j = 0; j < wageTypeArray.length; j++) {
+				Cell cell3 = row.getCell(4 + j);
+				Object wage = ExcelUtils.getCellValue(cell3);
 				if (wage == null) {
 					continue;
-				} else {
-					salary.setWage(wage);
-					salary.setType((String) wageMap.get(wageType));
-					salary.setTypeDesc(wageType);
-
-					try {
-						salaryRepository.save(salary);
-					} catch (Exception e) {
-						logger.error("保存员工失败");
-						e.printStackTrace();
-						staMap.put("remark", "保存员工失败");
-						failureList.add(staMap);
-						continue;
-					}
 				}
-				successList.add(staMap);
+
+				// 成功或失败的map
+				salaryMap.put("staCode", staff.getStaCode());
+				salaryMap.put("staName", staff.getStaName());
+
+				// 当年当月该类型工资的幂等校验
+				String wageType = wageTypeArray[j];
+				Salary checkSalary = salaryRepository.findSalary(staff.getStaId(), issueYear, issueMonth,
+						(String) wageMap.get(wageType));
+				if (!"update".equals(flag) && checkSalary != null) {
+					salaryMap.put("remark", "该员工" + issueYear + "年" + issueMonth + "月" + wageType + "已登记");
+					failureList.add(salaryMap);
+					continue;
+				}
+
+				salary.setWage(new BigDecimal(ExcelUtils.getCellValue(cell3).toString()));
+				salary.setType((String) wageMap.get(wageType));
+				salary.setTypeDesc(wageType);
+
+				try {
+					if (!"update".equals(flag)) {
+						salaryRepository.save(salary);
+					} else if (checkSalary != null) {
+						salaryRepository.update(salary.getSalId(), salary.getWage());
+					} else {
+						salaryMap.put("remark", "该员工" + issueYear + "年" + issueMonth + "月" + wageType + "未登记");
+					}
+				} catch (Exception e) {
+					logger.error("保存员工失败");
+					e.printStackTrace();
+					salaryMap.put("remark", "保存员工失败");
+					failureList.add(salaryMap);
+					continue;
+				}
+				successList.add(salaryMap);
 			}
 
 		}

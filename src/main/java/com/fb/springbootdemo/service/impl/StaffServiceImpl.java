@@ -18,7 +18,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import com.fb.springbootdemo.base.ErrorCodeEnum;
+import com.fb.springbootdemo.base.ServiceException;
 import com.fb.springbootdemo.model.Department;
 import com.fb.springbootdemo.model.Staff;
 import com.fb.springbootdemo.repository.DepartmentRepository;
@@ -63,6 +66,16 @@ public class StaffServiceImpl implements StaffService {
 
 		Sheet sheet = wb.getSheetAt(0);
 		int endRow = sheet.getPhysicalNumberOfRows();
+
+		// 序号校验
+		for (int i = 1; i < endRow; i++) {
+			Row row = sheet.getRow(i);
+			String sequence = (String) ExcelUtils.getCellValue(row.getCell(0));
+			if (!StringUtils.hasText(sequence)) {
+				throw new ServiceException(ErrorCodeEnum.EXCEL_BLANK_VALUE);
+			}
+		}
+
 		Iterable<Department> deps = departmentRepository.findAll();
 		Set<String> depCodes = new HashSet<>();
 		Set<String> depNames = new HashSet<>();
@@ -79,30 +92,33 @@ public class StaffServiceImpl implements StaffService {
 			if (null == row) {
 				continue;
 			}
+
+			// 反参的successList failureList所需对象
+			String sequence = (String) ExcelUtils.getCellValue(row.getCell(0));
+			Map<String, Object> staffMap = new HashMap<>();
+			staffMap.put("sequence", sequence);
+
 			Cell cell1 = row.getCell(1);
 			String depCode = (String) ExcelUtils.getCellValue(cell1);
 			if (!depCodes.contains(depCode)) {
-				Map<String, Object> failureMap = new HashMap<>();
-				failureMap.put("depCode", depCode);
-				failureMap.put("remark", "无此部门编号");
-				failureList.add(failureMap);
+				staffMap.put("depCode", depCode);
+				staffMap.put("remark", "无此部门编号");
+				failureList.add(staffMap);
 				continue;
 			}
 			Cell cell2 = row.getCell(2);
 			String depName = (String) ExcelUtils.getCellValue(cell2);
 			if (!depNames.contains(depName)) {
-				Map<String, Object> failureMap = new HashMap<>();
-				failureMap.put("depName", depName);
-				failureMap.put("remark", "无此部门名称");
-				failureList.add(failureMap);
+				staffMap.put("depName", depName);
+				staffMap.put("remark", "无此部门名称");
+				failureList.add(staffMap);
 				continue;
 			}
 			if (!depMaps.get(depCode).equals(depName)) {
-				Map<String, Object> failureMap = new HashMap<>();
-				failureMap.put("depCode", depCode);
-				failureMap.put("depName", depName);
-				failureMap.put("remark", "部门编号和部门名称不匹配");
-				failureList.add(failureMap);
+				staffMap.put("depCode", depCode);
+				staffMap.put("depName", depName);
+				staffMap.put("remark", "部门编号和部门名称不匹配");
+				failureList.add(staffMap);
 				continue;
 			}
 
@@ -118,27 +134,26 @@ public class StaffServiceImpl implements StaffService {
 			staff.setStaCode(staCode);
 			staff.setStaName(staName);
 
-			Map<String, Object> staMap = new HashMap<>();
-			staMap.put("depCode", depCode);
-			staMap.put("depName", depName);
-			staMap.put("staCode", staCode);
-			staMap.put("staName", staName);
+			staffMap.put("depCode", depCode);
+			staffMap.put("depName", depName);
+			staffMap.put("staCode", staCode);
+			staffMap.put("staName", staName);
 
 			try {
 				staffRepository.save(staff);
 			} catch (DataIntegrityViolationException e) {
 				e.printStackTrace();
-				staMap.put("remark", "重复的员工编号");
-				failureList.add(staMap);
+				staffMap.put("remark", "重复的员工编号");
+				failureList.add(staffMap);
 				continue;
 			} catch (Exception e) {
 				logger.error("保存员工失败");
 				e.printStackTrace();
-				staMap.put("remark", "保存员工失败");
-				failureList.add(staMap);
+				staffMap.put("remark", "保存员工失败");
+				failureList.add(staffMap);
 				continue;
 			}
-			successList.add(staMap);
+			successList.add(staffMap);
 		}
 		retMap.put("successList", successList);
 		retMap.put("failureList", failureList);

@@ -17,7 +17,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import com.fb.springbootdemo.base.ErrorCodeEnum;
+import com.fb.springbootdemo.base.ServiceException;
 import com.fb.springbootdemo.model.Department;
 import com.fb.springbootdemo.repository.DepartmentRepository;
 import com.fb.springbootdemo.service.DepartmentService;
@@ -46,6 +49,16 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 		Sheet sheet = wb.getSheetAt(0);
 		int endRow = sheet.getPhysicalNumberOfRows();
+
+		// 序号校验
+		for (int i = 1; i < endRow; i++) {
+			Row row = sheet.getRow(i);
+			String sequence = (String) ExcelUtils.getCellValue(row.getCell(0));
+			if (!StringUtils.hasText(sequence)) {
+				throw new ServiceException(ErrorCodeEnum.EXCEL_BLANK_VALUE);
+			}
+		}
+
 		Iterable<Department> deps = departmentRepository.findAll();
 		Set<String> depSets = new HashSet<>();
 		for (Department d : deps) {
@@ -56,16 +69,21 @@ public class DepartmentServiceImpl implements DepartmentService {
 			if (null == row) {
 				continue;
 			}
+
+			// 反参的successList failureList所需对象
+			String sequence = (String) ExcelUtils.getCellValue(row.getCell(0));
+			Map<String, Object> salaryMap = new HashMap<>();
+			salaryMap.put("sequence", sequence);
+
 			Cell cell1 = row.getCell(1);
 			String depCode = (String) ExcelUtils.getCellValue(cell1);
 			Cell cell2 = row.getCell(2);
 			String depName = (String) ExcelUtils.getCellValue(cell2);
 			if (depSets.contains(depCode)) {
-				Map<String, Object> failureMap = new HashMap<String, Object>();
-				failureMap.put("depCode", depCode);
-				failureMap.put("depName", depName);
-				failureMap.put("remark", "重复的部门编号");
-				failureList.add(failureMap);
+				salaryMap.put("depCode", depCode);
+				salaryMap.put("depName", depName);
+				salaryMap.put("remark", "重复的部门编号");
+				failureList.add(salaryMap);
 				continue;
 			}
 			Department department = new Department();
@@ -78,21 +96,20 @@ public class DepartmentServiceImpl implements DepartmentService {
 			Cell cell4 = row.getCell(4);
 			String leader = (String) ExcelUtils.getCellValue(cell4);
 			department.setLeader(leader);
-			
-			Map<String, Object> depMap = new HashMap<String, Object>();
-			depMap.put("depCode", depCode);
-			depMap.put("depName", depName);
-			
+
+			salaryMap.put("depCode", depCode);
+			salaryMap.put("depName", depName);
+
 			try {
 				departmentRepository.save(department);
 			} catch (Exception e) {
 				e.printStackTrace();
 				logger.error("部门保存失败");
-				depMap.put("remark", "数据保存失败");
-				failureList.add(depMap);
+				salaryMap.put("remark", "数据保存失败");
+				failureList.add(salaryMap);
 				continue;
 			}
-			successList.add(depMap);
+			successList.add(salaryMap);
 		}
 
 		retMap.put("successList", successList);

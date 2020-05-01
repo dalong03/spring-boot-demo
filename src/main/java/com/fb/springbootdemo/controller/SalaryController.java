@@ -27,13 +27,14 @@ public class SalaryController {
 
 	@RequestMapping(value = "/import", method = RequestMethod.POST)
 	public Map<String, Object> uploadImage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String flag = (String)req.getAttribute("flag");//保存或更新
 		MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) req;
 		Iterator<String> iter = multiRequest.getFileNames();
 		if (iter.hasNext()) {
 			String fileName = iter.next();
 			InputStream is = multiRequest.getFile(fileName).getInputStream();
 			Workbook wb = new XSSFWorkbook(is);
-			return salaryService.importData(wb, fileName);
+			return salaryService.importData(wb, fileName, flag);
 		}
 		return null;
 	}

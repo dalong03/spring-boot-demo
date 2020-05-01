@@ -22,7 +22,7 @@ public class Salary extends CommonModel{
 	@Id
 	@Column(name = "sal_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String salId;
+	private Integer salId;
 
 	@Column(name = "sta_id", nullable = false)
 	private Integer staId;
@@ -51,11 +51,11 @@ public class Salary extends CommonModel{
 	@Column(name = "issue_date", nullable = false)
 	private Date issueDate;
 
-	public String getSalId() {
+	public Integer getSalId() {
 		return salId;
 	}
 
-	public void setSalId(String salId) {
+	public void setSalId(Integer salId) {
 		this.salId = salId;
 	}
 

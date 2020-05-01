@@ -8,4 +8,5 @@ package com.fb.springbootdemo.base.constant;
 public final class CommonCodeConstant {
 
 	public static final String WAGE_TYPE = "wageType";
+	public static final String WAGE = "薪水";
 }

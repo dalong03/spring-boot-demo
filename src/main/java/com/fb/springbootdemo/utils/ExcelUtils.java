@@ -20,7 +20,7 @@ public abstract class ExcelUtils {
 			value = cell.getNumericCellValue();
 			break;
 		case STRING: // 字符串
-			value = cell.getStringCellValue().trim();
+			value = cell.getStringCellValue().replace(" ", "");
 			break;
 		case BOOLEAN: // 布尔
 			value = cell.getBooleanCellValue();
