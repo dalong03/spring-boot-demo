@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+	<contextName>logback</contextName>
+	<springProperty scope="context" name="LOG_PATH" source="logging.path" />
+	<springProperty scope="context" name="LOG_APP" source="spring.application.name" />
+	<!-- <springProperty scope="context" name="LOG_LEVEL" source="logging.level" /> -->
+	<appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+		</layout>
+	</appender>
+	<appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+		</filter>
+		<File>${LOG_PATH}/${LOG_APP}-info.log</File>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+		</encoder>
+		<!--滚动策略 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!--路径 -->
+			<FileNamePattern>${LOG_PATH}/${LOG_APP}-info-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+			<MaxHistory>5</MaxHistory>
+			<MaxFileSize>20MB</MaxFileSize>
+		</rollingPolicy>
+	</appender>
+	<appender name="fileWarnLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>WARN</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<File>${LOG_PATH}/${LOG_APP}-warn.log</File>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+		</encoder>
+		<!--滚动策略 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!--路径 -->
+			<FileNamePattern>${LOG_PATH}/${LOG_APP}-warn-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+			<MaxHistory>5</MaxHistory>
+			<MaxFileSize>20MB</MaxFileSize>
+		</rollingPolicy>
+	</appender>
+	<appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<File>${LOG_PATH}/${LOG_APP}-error.log</File>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+		</encoder>
+		<!--滚动策略 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!--路径 -->
+			<FileNamePattern>${LOG_PATH}/${LOG_APP}-error-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+			<MaxHistory>5</MaxHistory>
+			<MaxFileSize>20MB</MaxFileSize>
+		</rollingPolicy>
+	</appender>
+	<logger name="com.fb" level="info" additivity="false">
+		<appender-ref ref="consoleLog" />
+		<appender-ref ref="fileInfoLog" />
+		<appender-ref ref="fileWarnLog" />
+		<appender-ref ref="fileErrorLog" />
+	</logger>
+	<root level="info">
+		<appender-ref ref="consoleLog" />
+		<appender-ref ref="fileInfoLog" />
+		<appender-ref ref="fileWarnLog" />
+		<appender-ref ref="fileErrorLog" />
+	</root>
+</configuration>

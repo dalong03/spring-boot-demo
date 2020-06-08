@@ -1,6 +1,6 @@
 package com.fb.springbootdemo.service;
 
-public interface MyService {
+public interface T1Service {
 
 	void say();
 }

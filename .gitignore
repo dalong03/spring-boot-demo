@@ -32,3 +32,6 @@ HELP.md
 .classpath
 .project
 .settings/
+
+.logs
+/LOG_PATH_IS_UNDEFINED/

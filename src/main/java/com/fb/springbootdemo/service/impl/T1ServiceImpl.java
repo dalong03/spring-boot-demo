@@ -2,10 +2,10 @@ package com.fb.springbootdemo.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.fb.springbootdemo.service.MyService;
+import com.fb.springbootdemo.service.T1Service;
 
 @Service
-public class MyServiceImpl implements MyService{
+public class T1ServiceImpl implements T1Service{
 
 	@Override
 	public void say() {
