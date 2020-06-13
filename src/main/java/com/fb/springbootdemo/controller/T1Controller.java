@@ -10,12 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fb.springbootdemo.model.T1;
+import com.fb.springbootdemo.repository.T1Repository;
 import com.fb.springbootdemo.service.T1Service;
 
 @RestController
@@ -25,6 +28,8 @@ public class T1Controller {
 	
 	@Autowired
 	private T1Service t1Service;
+	@Autowired
+	private T1Repository t1Repository;
 
 	@RequestMapping(value = "/html", method = RequestMethod.GET)
 	public ModelAndView index() {
@@ -32,13 +37,12 @@ public class T1Controller {
 		return view;
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, Object> get(ServletRequest request, ServletResponse response, String name) {
-		System.out.println("t1/get");
+	@RequestMapping(value="/{id}", method = RequestMethod.GET)
+	public Map<String, Object> get(ServletRequest request, ServletResponse response, String name, @PathVariable("id") Integer id) {
+		T1 t1 = t1Repository.find(id);
 		Map<String, Object> out = new HashMap<>();
 		out.put("name", "tom");
-//		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-//		httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+		out.put("t1", t1);
 		return out;
 	}
 

@@ -18,6 +18,10 @@ spring:
       prefix: /pages/
       suffix: .html
       
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.fb.springbootdemo.model
+      
 logging:
   path: .logs
   #level: info
