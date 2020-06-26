@@ -2,6 +2,8 @@ server:
   port: 8090
   
 spring:
+  application:
+    name: spring-boot-demo
   jpa:
     database: "MYSQL"
     show-sql: "true"
@@ -21,7 +23,9 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.fb.springbootdemo.model
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
       
 logging:
-  path: .logs
+  path: ./logs
   #level: info

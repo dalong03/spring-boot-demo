@@ -4,7 +4,16 @@ public class T1 {
 
 	private Integer id;
 	private String name;
-	private Integer age;
+	private Integer balance;
+	private Integer version;
+
+	public T1() {
+	}
+
+	public T1(Integer id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 
 	public Integer getId() {
 		return id;
@@ -22,16 +31,24 @@ public class T1 {
 		this.name = name;
 	}
 
-	public Integer getAge() {
-		return age;
+	public Integer getBalance() {
+		return balance;
 	}
 
-	public void setAge(Integer age) {
-		this.age = age;
+	public void setBalance(Integer balance) {
+		this.balance = balance;
 	}
 
 	@Override
 	public String toString() {
-		return "T1 [id=" + id + ", name=" + name + ", age=" + age + "]";
+		return "T1 [id=" + id + ", name=" + name + ", balance=" + balance + ", version=" + version + "]";
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 }
