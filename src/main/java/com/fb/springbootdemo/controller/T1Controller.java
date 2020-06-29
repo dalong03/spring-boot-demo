@@ -1,5 +1,6 @@
 package com.fb.springbootdemo.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class T1Controller {
 		T1 t1 = t1Repository.find(id);
 		Map<String, Object> out = new HashMap<>();
 		out.put("name", "tom");
-		out.put("t1", t1);
+//		out.put("t1", t1);
 		return out;
 	}
 

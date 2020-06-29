@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fb.springbootdemo.base.AbstractCrudService;
+import com.fb.springbootdemo.common.AbstractCrudService;
 import com.fb.springbootdemo.model.PageInfo;
 import com.fb.springbootdemo.model.T1;
 import com.fb.springbootdemo.repository.T1Repository;

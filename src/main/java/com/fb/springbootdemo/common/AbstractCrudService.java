@@ -1,4 +1,4 @@
-package com.fb.springbootdemo.base;
+package com.fb.springbootdemo.common;
 
 import java.util.List;
 

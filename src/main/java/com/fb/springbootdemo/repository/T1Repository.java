@@ -2,7 +2,7 @@ package com.fb.springbootdemo.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.fb.springbootdemo.base.CrudRepository;
+import com.fb.springbootdemo.common.CrudRepository;
 import com.fb.springbootdemo.model.T1;
 
 @Repository
