@@ -9,7 +9,7 @@ spring:
     show-sql: "true"
   datasource:
     platform: "mysql"
-    url: "jdbc:mysql://localhost:3306/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=CTT"
+    url: "jdbc:mysql://localhost:3306/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT"
     #url: "jdbc:mysql://localhost:8066/TESTDB?autoReconnect=true&useUnicode=true&characterEncoding=utf8"
     username: "root"
     password: "123456"
@@ -29,3 +29,5 @@ mybatis:
 logging:
   path: ./logs
   #level: info
+
+magic: null

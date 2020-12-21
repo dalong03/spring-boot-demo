@@ -10,24 +10,13 @@
 		<where>
 			<if test="e != null">
 				<if test="e.id != null">
-					and id = #{e.id}
+					and id = ${e.id}
 				</if>
 				<if test="e.name != null and e.name neq ''">
 					and name = #{e.name}
 				</if>
 			</if>
 		</where>
-	</sql>
-	<sql id="order">
-		<if test="order != null">
-			order by
-			<if test="order.id != null">
-				id
-			</if>
-			<if test="order.name != null">
-				name
-			</if>
-		</if>
 	</sql>
 
 	<select id="find" resultType="t1">
@@ -38,14 +27,13 @@
 		select * from
 		(select * from t1
 		<include refid="condition"></include>
-		<include refid="order"></include>
 		) t
 		limit
 		#{pageInfo.startIndex}, #{pageInfo.endIndex}
 	</select>
 	
 	<update id="update">
-		update t1 set balance = #{balance}, version = #{version} + 1 where id = #{id} and version = #{version}
+		update t1 set balance = #{balance} where id = #{id}
 	</update>
 
 </mapper>

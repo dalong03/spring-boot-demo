@@ -19,4 +19,11 @@ public class GenericExceptionHandler {
 		return m;
 	}
 
+	@ExceptionHandler({ RuntimeException.class })
+	public Map<String, Object> runtimeExceptionHandle(RuntimeException e) {
+		Map<String, Object> m = new HashMap<>();
+		m.put("message", e.getMessage());
+		return m;
+	}
+
 }

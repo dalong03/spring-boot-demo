@@ -1,8 +1,8 @@
 package com.fb.springbootdemo.model;
 
 public class PageInfo {
-	private Integer startIndex;
-	private Integer endIndex;
+	private Integer startIndex = 1;
+	private Integer pageSize = 30;
 	private Integer pageNo;
 	private Integer count;
 
@@ -14,12 +14,12 @@ public class PageInfo {
 		this.startIndex = startIndex;
 	}
 
-	public Integer getEndIndex() {
-		return endIndex;
+	public Integer getPageSize() {
+		return pageSize;
 	}
 
-	public void setEndIndex(Integer endIndex) {
-		this.endIndex = endIndex;
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 
 	public Integer getPageNo() {
@@ -40,7 +40,7 @@ public class PageInfo {
 
 	@Override
 	public String toString() {
-		return "PageInfo [startIndex=" + startIndex + ", endIndex=" + endIndex + ", pageNo=" + pageNo + ", count="
+		return "PageInfo [startIndex=" + startIndex + ", pageSize=" + pageSize + ", pageNo=" + pageNo + ", count="
 				+ count + "]";
 	}
 

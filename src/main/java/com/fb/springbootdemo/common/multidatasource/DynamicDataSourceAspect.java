@@ -14,10 +14,6 @@ import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.fb.springbootdemo.common.multidatasource.DataSourceContextHolder;
-import com.fb.springbootdemo.common.multidatasource.DynamicDataSource;
-import com.fb.springbootdemo.common.multidatasource.DataSource;
-
 /**
  * 多数据源切换的aop
  *
@@ -47,10 +43,10 @@ public class DynamicDataSourceAspect implements Ordered {
         DataSource datasource = currentMethod.getAnnotation(DataSource.class);
         if (datasource != null && StringUtils.hasText(datasource.value())) {
             DataSourceContextHolder.setDataSourceType(datasource.value());
-            log.debug("设置数据源为：" + datasource.value());
+            log.info("设置数据源为：" + datasource.value());
         } else {
             DataSourceContextHolder.setDataSourceType(DynamicDataSource.DATASOURCE1);
-            log.debug("设置数据源为：" + DynamicDataSource.DATASOURCE1);
+            log.info("设置数据源为：" + DynamicDataSource.DATASOURCE1);
         }
 
         try {
