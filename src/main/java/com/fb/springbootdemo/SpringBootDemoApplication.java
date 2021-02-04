@@ -13,10 +13,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 public class SpringBootDemoApplication {
 
+	static Logger logger = LoggerFactory.getLogger(SpringBootDemoApplication.class);
 	public static void main(String[] args) {
-		Logger logger = LoggerFactory.getLogger(SpringBootDemoApplication.class);
-		logger.info("======");
 		SpringApplication.run(SpringBootDemoApplication.class, args);
+		logger.info("======");
 	}
 
 }

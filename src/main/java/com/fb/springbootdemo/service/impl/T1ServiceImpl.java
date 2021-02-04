@@ -31,13 +31,13 @@ public class T1ServiceImpl extends AbstractCrudService<T1> implements T1Service 
 	@Override
 //	@DataSource
 	public T1 find(Integer id) {
-		return t1Repository.find(id);
+		return null; //t1Repository.find(id);
 	}
 	
 	@Override
 	@DataSource
 	public List<T1> findPage(T1 t1, T1 order, PageInfo pageInfo) {
-		return t1Repository.findPage(t1, order, pageInfo);
+		return null; //t1Repository.findPage(t1, order, pageInfo);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class T1ServiceImpl extends AbstractCrudService<T1> implements T1Service 
 	public T1 update(T1 t1) {
 //		T1 t0 = t1Repository.find(t1.getId());
 //		t1.setVersion(t0.getVersion());
-		t1Repository.update(t1);
+//		t1Repository.update(t1);
 		if(true) {
 //			throw new RuntimeException();
 		}

@@ -59,6 +59,8 @@ public class T1Controller {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Map<String, Object> get(ServletRequest request, ServletResponse response, String name,
 			@PathVariable("id") Integer id) {
+		T1 t1  = t1Repository.findOne(1);
+		System.out.println(t1);
 		System.out.println(logger);
 		HttpServletRequest req =  (HttpServletRequest)request;
 		System.out.println(req.getSession().getId());
