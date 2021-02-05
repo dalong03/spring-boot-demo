@@ -22,7 +22,7 @@ public class GenericFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("GenericFilter");
+//		System.out.println("GenericFilter");
 		chain.doFilter(request, response);
 	}
 

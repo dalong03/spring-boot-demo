@@ -4,13 +4,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+@Entity
+@Table(name = "t1")
 public class T1 {
 
 //	@NotBlank(message = "id为空")
+	@Id
 	private Integer id;
 //	@NotBlank(message = "name为空")
 	private String name;

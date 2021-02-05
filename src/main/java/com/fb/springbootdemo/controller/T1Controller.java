@@ -1,8 +1,8 @@
 package com.fb.springbootdemo.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.ServletRequest;
@@ -15,9 +15,7 @@ import javax.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,8 +26,6 @@ import com.fb.springbootdemo.model.PageInfo;
 import com.fb.springbootdemo.model.T1;
 import com.fb.springbootdemo.repository.T1Repository;
 import com.fb.springbootdemo.service.T1Service;
-import com.fb.springbootdemo.test.listener.Email;
-import com.fb.springbootdemo.test.listener.EmailEvent;
 import com.fb.springbootdemo.test.routinginject.HelloService;
 import com.fb.springbootdemo.test.routinginject.RoutingInject;
 
@@ -41,28 +37,28 @@ public class T1Controller {
 	@Autowired
 //	@Resource
 	private T1Service t1Service;
-	
+
 	@Autowired
 	private Validator validator;
-	
+
 	public T1Service getT1Service() {
 		return t1Service;
 	}
 
 	@Autowired
 	private T1Repository t1Repository;
-	
+
 	@RoutingInject("helloServiceImpl2")
 	private HelloService helloService;
-	
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Map<String, Object> get(ServletRequest request, ServletResponse response, String name,
 			@PathVariable("id") Integer id) {
-		T1 t1  = t1Repository.findOne(1);
+		helloService.say();
+		Optional<T1> t1 = t1Repository.findById(1);
 		System.out.println(t1);
 		System.out.println(logger);
-		HttpServletRequest req =  (HttpServletRequest)request;
+		HttpServletRequest req = (HttpServletRequest) request;
 		System.out.println(req.getSession().getId());
 //		Email e = new Email("1", "2");
 //		EmailEvent ee = new EmailEvent(e);
@@ -77,25 +73,22 @@ public class T1Controller {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public Map<String, Object> findList(ServletRequest request, ServletResponse response, T1 t1, PageInfo pageInfo,
 			String order1) {
-		List<T1> t1s = t1Service.findPage(t1, null, pageInfo);
-		Map<String, Object> out = new HashMap<>();
-		out.put("name", "tom");
-		out.put("t1s", t1s);
-		return out;
+		return null;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public Map<String, Object> post(ServletRequest request, ServletResponse response, @RequestBody @Valid T1 t1 , BindingResult result){
+	public Map<String, Object> post(ServletRequest request, ServletResponse response, @RequestBody @Valid T1 t1,
+			BindingResult result) {
 //        if(result.hasErrors()){
 //            for (ObjectError error : result.getAllErrors()) {
 //                System.out.println(error.getDefaultMessage());
 //            }
 //        }
 		Set<ConstraintViolation<T1>> violationSet = validator.validate(t1);
-        for (ConstraintViolation<T1> model : violationSet) {
-            System.out.println(model.getPropertyPath());
-            System.out.println(model.getMessage());
-        }
+		for (ConstraintViolation<T1> model : violationSet) {
+			System.out.println(model.getPropertyPath());
+			System.out.println(model.getMessage());
+		}
 		Map<String, Object> out = new HashMap<>();
 //		System.out.println(request.getParameter("name"));
 		out.put("name", "jerry");
@@ -104,7 +97,7 @@ public class T1Controller {
 
 	@RequestMapping(value = "", method = RequestMethod.PUT)
 	public T1 update(@RequestBody T1 t1) {
-		return t1Service.update(t1);
+		return t1Repository.save(t1);
 	}
 
 }

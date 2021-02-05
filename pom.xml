@@ -6,9 +6,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<!-- <version>2.1.5.RELEASE</version> -->
-		<version>1.4.4.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<version>2.0.6.RELEASE</version>
+		<relativePath />
 	</parent>
 	<groupId>com.fb</groupId>
 	<artifactId>spring-boot-demo</artifactId>
@@ -38,13 +37,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			<!-- <version>1.4.4.RELEASE</version> -->
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
-			<!-- <version>1.4.4.RELEASE</version> -->
 		</dependency>
 
 		<dependency>
