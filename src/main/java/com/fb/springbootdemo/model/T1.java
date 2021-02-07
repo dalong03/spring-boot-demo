@@ -3,13 +3,14 @@ package com.fb.springbootdemo.model;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "t1")
@@ -20,11 +21,21 @@ public class T1 {
 	private Integer id;
 //	@NotBlank(message = "name为空")
 	private String name;
-	@NotBlank(message = "date为空")
-	@NotNull(message = "日期格式不正确")
 	private Date date;
 	private Integer balance;
 	private Integer version;
+	
+	@OneToMany(targetEntity = T2.class, cascade = {CascadeType.PERSIST})
+	@JoinColumn(name = "t1_id", referencedColumnName = "id")
+	private List<T2> contacts;
+
+	public List<T2> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<T2> contacts) {
+		this.contacts = contacts;
+	}
 
 	public T1() {
 	}
@@ -78,7 +89,8 @@ public class T1 {
 
 	@Override
 	public String toString() {
-		return "T1 [id=" + id + ", name=" + name + ", balance=" + balance + ", version=" + version + "]";
+		return "T1 [id=" + id + ", name=" + name + ", date=" + date + ", balance=" + balance + ", version=" + version
+				+ ", contacts=" + contacts + "]";
 	}
 
 	public Integer getVersion() {

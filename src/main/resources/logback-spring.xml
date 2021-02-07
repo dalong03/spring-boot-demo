@@ -70,6 +70,7 @@
 		<appender-ref ref="fileWarnLog" />
 		<appender-ref ref="fileErrorLog" />
 	</logger>
+	<logger name="org.hibernate" level="all"/>
 	<root level="info">
 		<appender-ref ref="consoleLog" />
 		<appender-ref ref="fileInfoLog" />

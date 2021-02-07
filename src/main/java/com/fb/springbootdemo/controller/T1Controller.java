@@ -54,7 +54,6 @@ public class T1Controller {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Map<String, Object> get(ServletRequest request, ServletResponse response, String name,
 			@PathVariable("id") Integer id) {
-		helloService.say();
 		Optional<T1> t1 = t1Repository.findById(1);
 		System.out.println(t1);
 		System.out.println(logger);
@@ -77,21 +76,23 @@ public class T1Controller {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public Map<String, Object> post(ServletRequest request, ServletResponse response, @RequestBody @Valid T1 t1,
+	public Map<String, Object> post(ServletRequest request, ServletResponse response, @RequestBody /*@Valid*/ T1 t1,
 			BindingResult result) {
 //        if(result.hasErrors()){
 //            for (ObjectError error : result.getAllErrors()) {
 //                System.out.println(error.getDefaultMessage());
 //            }
 //        }
-		Set<ConstraintViolation<T1>> violationSet = validator.validate(t1);
-		for (ConstraintViolation<T1> model : violationSet) {
-			System.out.println(model.getPropertyPath());
-			System.out.println(model.getMessage());
-		}
+//		Set<ConstraintViolation<T1>> violationSet = validator.validate(t1);
+//		for (ConstraintViolation<T1> model : violationSet) {
+//			System.out.println(model.getPropertyPath());
+//			System.out.println(model.getMessage());
+//		}
 		Map<String, Object> out = new HashMap<>();
 //		System.out.println(request.getParameter("name"));
 		out.put("name", "jerry");
+		t1.getContacts().stream().forEach(item -> {item.setT1(t1);});
+		t1Repository.save(t1);
 		return out;
 	}
 
