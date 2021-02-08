@@ -1,0 +1,40 @@
+sharding:
+  jdbc:
+    datasource:
+      names: master,slave0
+      master:
+        type: org.apache.commons.dbcp.BasicDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: "jdbc:mysql://8.136.154.190:3306/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT"
+        username: "transsion"
+        password: "131415"
+        maxActive: 20
+        validationQuery: SELECT 1
+        testOnBorrow: false
+        timeBetweenEvictionRunsMillis: 300000
+        testWhileIdle: true
+        minEvictableIdleTimeMillis: 1800000
+        initialSize: 5
+        minIdle: 3
+        maxWait: 30000
+      slave0:
+        type: org.apache.commons.dbcp.BasicDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: "jdbc:mysql://localhost:3306/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT"
+        username: "root"
+        password: "123456"
+        maxActive: 20
+        validationQuery: SELECT 1
+        testOnBorrow: false
+        timeBetweenEvictionRunsMillis: 300000
+        testWhileIdle: true
+        minEvictableIdleTimeMillis: 1800000
+        initialSize: 5
+        minIdle: 3
+        maxWait: 30000
+    config:
+      masterslave:
+        load-balance-algorithm-type: ROUND_ROBIN
+        name: ds_ms
+        master-data-source-name: master
+        slave-data-source-names: slave0

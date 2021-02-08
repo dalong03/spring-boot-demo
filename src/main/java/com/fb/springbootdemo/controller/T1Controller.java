@@ -91,7 +91,7 @@ public class T1Controller {
 		Map<String, Object> out = new HashMap<>();
 //		System.out.println(request.getParameter("name"));
 		out.put("name", "jerry");
-		t1.getContacts().stream().forEach(item -> {item.setT1(t1);});
+//		t1.getContacts().stream().forEach(item -> {item.setT1(t1);});
 		t1Repository.save(t1);
 		return out;
 	}

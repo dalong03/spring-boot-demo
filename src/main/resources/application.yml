@@ -1,5 +1,9 @@
 server:
   port: 8090
+
+logging:
+  path: ./logs
+  #level: info
   
 spring:
   application:
@@ -7,14 +11,14 @@ spring:
   jpa:
     database: "MYSQL"
     show-sql: "true"
-  datasource:
-    platform: "mysql"
-    url: "jdbc:mysql://localhost:3306/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT"
-    #url: "jdbc:mysql://localhost:8066/TESTDB?autoReconnect=true&useUnicode=true&characterEncoding=utf8"
-    username: "root"
-    password: "123456"
-    testWhileIdle: "true"
-    validationQuery: "SELECT 1"
+#  datasource:
+#    platform: "mysql"
+#    url: "jdbc:mysql://8.136.154.190:3306/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT"
+#    username: "transsion"
+#    password: "131415"
+#    testWhileIdle: "true"
+#    validationQuery: "SELECT 1"
+
   mvc:
     view:
       prefix: /pages/
@@ -26,8 +30,4 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
       
-logging:
-  path: ./logs
-  #level: info
-
 magic: null
