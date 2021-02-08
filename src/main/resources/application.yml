@@ -13,7 +13,7 @@ spring:
     show-sql: "true"
 #  datasource:
 #    platform: "mysql"
-#    url: "jdbc:mysql://8.136.154.190:3306/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT"
+#    url: "jdbc:mysql://localhost:3306/test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=CTT"
 #    username: "transsion"
 #    password: "131415"
 #    testWhileIdle: "true"

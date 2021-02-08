@@ -10,10 +10,7 @@
 		</layout>
 	</appender>
 	<appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<level>INFO</level>
-		</filter>
-		<File>${LOG_PATH}/${LOG_APP}-info.log</File>
+		<File>${LOG_PATH}/${LOG_APP}.log</File>
 		<encoder>
 			<charset>UTF-8</charset>
 			<pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
@@ -21,7 +18,7 @@
 		<!--滚动策略 -->
 		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 			<!--路径 -->
-			<FileNamePattern>${LOG_PATH}/${LOG_APP}-info-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+			<FileNamePattern>${LOG_PATH}/${LOG_APP}-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
 			<MaxHistory>5</MaxHistory>
 			<MaxFileSize>20MB</MaxFileSize>
 		</rollingPolicy>
