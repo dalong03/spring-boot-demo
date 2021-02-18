@@ -56,16 +56,8 @@ public class T1Controller {
 			@PathVariable("id") Integer id) {
 		Optional<T1> t1 = t1Repository.findById(1);
 		System.out.println(t1);
-		System.out.println(logger);
-		HttpServletRequest req = (HttpServletRequest) request;
-		System.out.println(req.getSession().getId());
-//		Email e = new Email("1", "2");
-//		EmailEvent ee = new EmailEvent(e);
-		System.out.println(request.getParameter("name"));
-		helloService.say();
-//		T1 t1 = t1Service.find(id);
 		Map<String, Object> out = new HashMap<>();
-//		out.put("t1", t1);
+		out.put("t1", t1);
 		return out;
 	}
 
