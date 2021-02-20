@@ -6,8 +6,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "t2")
+@JsonIgnoreProperties({"t1"})
 public class T2 {
 
 	@Id

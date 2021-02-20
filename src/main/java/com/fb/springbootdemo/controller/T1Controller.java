@@ -1,19 +1,14 @@
 package com.fb.springbootdemo.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
-import javax.validation.Valid;
 import javax.validation.Validator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fb.springbootdemo.model.PageInfo;
 import com.fb.springbootdemo.model.T1;
+import com.fb.springbootdemo.model.T2;
 import com.fb.springbootdemo.repository.T1Repository;
 import com.fb.springbootdemo.service.T1Service;
 import com.fb.springbootdemo.test.routinginject.HelloService;
@@ -32,7 +28,6 @@ import com.fb.springbootdemo.test.routinginject.RoutingInject;
 @RestController
 @RequestMapping(value = "/t1")
 public class T1Controller {
-	private static Logger logger = LoggerFactory.getLogger(T1Controller.class);
 
 	@Autowired
 //	@Resource
@@ -54,10 +49,31 @@ public class T1Controller {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Map<String, Object> get(ServletRequest request, ServletResponse response, String name,
 			@PathVariable("id") Integer id) {
-		Optional<T1> t1 = t1Repository.findById(1);
-		System.out.println(t1);
+		List<Object[]> list = t1Repository.findByVersion(1);
+		HashMap<Integer, T1> map = new HashMap<>();
+		for(Object[] ob : list) {
+			if(!map.containsKey(ob[0])) {
+				T1 t1 = new T1();
+				t1.setId((Integer)ob[0]);
+				t1.setName((String)ob[1]);
+				List<T2> t2s = new ArrayList<>();
+				t1.setContacts(t2s);
+				T2 t2 = new T2();
+				t2.setId((Integer)ob[2]);
+				t2.setName((String)ob[3]);
+				t2s.add(t2);
+				map.put((Integer)ob[0], t1);
+			} else {
+				T1 t1 = map.get((Integer)ob[0]);
+				List<T2> t2s = t1.getContacts();
+				T2 t2 = new T2();
+				t2.setId((Integer)ob[2]);
+				t2.setName((String)ob[3]);
+				t2s.add(t2);
+			}
+		}
 		Map<String, Object> out = new HashMap<>();
-		out.put("t1", t1);
+		out.put("t1", map.values());
 		return out;
 	}
 

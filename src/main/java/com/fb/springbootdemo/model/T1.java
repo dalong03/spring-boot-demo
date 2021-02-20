@@ -1,7 +1,5 @@
 package com.fb.springbootdemo.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -21,11 +19,10 @@ public class T1 {
 	private Integer id;
 //	@NotBlank(message = "name为空")
 	private String name;
-	private Date date;
-	private Integer balance;
+	private Date birthday;
 	private Integer version;
-	
-	@OneToMany(targetEntity = T2.class, cascade = {CascadeType.PERSIST})
+
+	@OneToMany(targetEntity = T2.class, cascade = { CascadeType.PERSIST })
 	@JoinColumn(name = "t1_id", referencedColumnName = "id")
 	private List<T2> contacts;
 
@@ -61,36 +58,18 @@ public class T1 {
 		this.name = name;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-	
-	public void setDate(Date date) {
-        this.date = date;
+	public Date getBirthday() {
+		return birthday;
 	}
 
-	public void setDate(String date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        try {
-        	this.date = sdf.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            this.date = null;
-        }
-	}
-
-	public Integer getBalance() {
-		return balance;
-	}
-
-	public void setBalance(Integer balance) {
-		this.balance = balance;
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
 
 	@Override
 	public String toString() {
-		return "T1 [id=" + id + ", name=" + name + ", date=" + date + ", balance=" + balance + ", version=" + version
-				+ ", contacts=" + contacts + "]";
+		return "T1 [id=" + id + ", name=" + name + ", birthday=" + birthday + ", version="
+				+ version + "]";
 	}
 
 	public Integer getVersion() {

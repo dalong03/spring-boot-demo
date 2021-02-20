@@ -11,6 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.DefaultResourceLoader;
 
 import com.fb.springbootdemo.controller.T1Controller;
+import com.fb.springbootdemo.repository.T1Repository;
 import com.fb.springbootdemo.service.T1Service;
 import com.fb.springbootdemo.test.conditional.MagicBean;
 import com.fb.springbootdemo.test.conditional.MagicConfig;
@@ -33,7 +34,7 @@ public class BeanFactoryTest {
 	@Test
 	public void test2() {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		MagicConfig c = (MagicConfig)ctx.getBean("magicConfig");
+		T1Repository c = (T1Repository)ctx.getBean("t1Repository");
 		System.out.println(c);
 	}
 

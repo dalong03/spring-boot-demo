@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fb.springbootdemo.repository.T1Repository">
+<mapper namespace="com.fb.springbootdemo.repository.T3Repository">
 
 	<sql id="baseColumns">
-		id, name, age, version
+		id, name, birthday
 	</sql>
 
 	<sql id="condition">
@@ -19,21 +19,21 @@
 		</where>
 	</sql>
 
-	<select id="find" resultType="t1">
-		select * from t1 where id = #{id}
+	<select id="findById" resultType="t3">
+		select * from t3 where id = #{id}
 	</select>
 
-	<select id="findPage" resultType="t1">
+	<select id="findPage" resultType="t3">
 		select * from
-		(select * from t1
+		(select * from t3
 		<include refid="condition"></include>
 		) t
 		limit
 		#{pageInfo.startIndex}, #{pageInfo.endIndex}
 	</select>
-	
+
 	<update id="update">
-		update t1 set balance = #{balance} where id = #{id}
+		update t3 set balance = #{balance} where id = #{id}
 	</update>
 
 </mapper>
