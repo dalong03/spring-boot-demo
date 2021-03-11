@@ -15,6 +15,7 @@ import com.fb.springbootdemo.repository.T1Repository;
 import com.fb.springbootdemo.service.T1Service;
 import com.fb.springbootdemo.test.conditional.MagicBean;
 import com.fb.springbootdemo.test.conditional.MagicConfig;
+import com.fb.springbootdemo.test.factorybean.Fruit;
 import com.fb.springbootdemo.test.listener.Email;
 import com.fb.springbootdemo.test.listener.EmailEvent;
 
@@ -34,7 +35,7 @@ public class BeanFactoryTest {
 	@Test
 	public void test2() {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		T1Repository c = (T1Repository)ctx.getBean("t1Repository");
+		Fruit c = (Fruit)ctx.getBean("fruit");
 		System.out.println(c);
 	}
 
