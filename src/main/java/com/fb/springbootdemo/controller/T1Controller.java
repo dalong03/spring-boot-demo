@@ -22,6 +22,8 @@ import com.fb.springbootdemo.model.T1;
 import com.fb.springbootdemo.model.T2;
 import com.fb.springbootdemo.repository.T1Repository;
 import com.fb.springbootdemo.service.T1Service;
+import com.fb.springbootdemo.test.listener.Email;
+import com.fb.springbootdemo.test.listener.EmailEvent;
 import com.fb.springbootdemo.test.routinginject.HelloService;
 import com.fb.springbootdemo.test.routinginject.RoutingInject;
 
@@ -49,6 +51,8 @@ public class T1Controller {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Map<String, Object> get(ServletRequest request, ServletResponse response, String name,
 			@PathVariable("id") Integer id) {
+		Email e = new Email("1", "2");
+		EmailEvent ee = new EmailEvent(e);
 		List<Object[]> list = t1Repository.findByVersion(1);
 		HashMap<Integer, T1> map = new HashMap<>();
 		for(Object[] ob : list) {
