@@ -6,9 +6,9 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class ApplicationContextHolder implements ApplicationContextAware, DisposableBean {
 	private static ApplicationContext applicationContext = null;
 	private static Logger logger = LoggerFactory.getLogger(ApplicationContextHolder.class);
@@ -26,7 +26,7 @@ public class ApplicationContextHolder implements ApplicationContextAware, Dispos
 	 * 
 	 * @return
 	 */
-	public ApplicationContext getApplicationContext() {
+	public static ApplicationContext getApplicationContext() {
 		return applicationContext;
 	}
 
