@@ -84,36 +84,39 @@
 			<version>1.2.47</version>
 		</dependency>
 		<dependency>
-		    <groupId>io.jsonwebtoken</groupId>
-		    <artifactId>jjwt</artifactId>
-		    <version>0.9.1</version>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
 		</dependency>
-		
-		<!-- <dependency>
-            <groupId>io.shardingsphere</groupId>
-            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-            <version>3.0.0.M1</version>
-        </dependency>
+
+		<!-- <dependency> <groupId>io.shardingsphere</groupId> <artifactId>sharding-jdbc-spring-boot-starter</artifactId> 
+			<version>3.0.0.M1</version> </dependency> <dependency> <groupId>io.shardingsphere</groupId> 
+			<artifactId>sharding-jdbc-spring-namespace</artifactId> <version>3.0.0.M1</version> 
+			</dependency> <dependency> <groupId>commons-dbcp</groupId> <artifactId>commons-dbcp</artifactId> 
+			<version>1.4</version> </dependency> -->
 		<dependency>
-            <groupId>io.shardingsphere</groupId>
-            <artifactId>sharding-jdbc-spring-namespace</artifactId>
-            <version>3.0.0.M1</version>
-        </dependency>
-        <dependency>
-	        <groupId>commons-dbcp</groupId>
-	        <artifactId>commons-dbcp</artifactId>
-	        <version>1.4</version>
-	    </dependency> -->
-	    <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jersey</artifactId>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
 		<dependency>
-		    <groupId>com.alibaba</groupId>
-		    <artifactId>easyexcel</artifactId>
-		    <version>2.2.4</version>
+			<groupId>com.alibaba</groupId>
+			<artifactId>easyexcel</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-streams</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
 		</dependency>
 	</dependencies>
 
