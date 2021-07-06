@@ -4,7 +4,7 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class EmailNotifier implements ApplicationListener<ApplicationEvent> {
 
 	public void onApplicationEvent(ApplicationEvent event) {

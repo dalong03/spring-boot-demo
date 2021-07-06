@@ -10,9 +10,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.DefaultResourceLoader;
 
-import com.fb.springbootdemo.controller.T1Controller;
-import com.fb.springbootdemo.repository.T1Repository;
-import com.fb.springbootdemo.service.T1Service;
+import com.fb.springbootdemo.controller.T3Controller;
+import com.fb.springbootdemo.repository.T3Repository;
+import com.fb.springbootdemo.service.T3Service;
 import com.fb.springbootdemo.test.conditional.MagicBean;
 import com.fb.springbootdemo.test.conditional.MagicConfig;
 import com.fb.springbootdemo.test.factorybean.Fruit;
@@ -26,7 +26,7 @@ public class BeanFactoryTest {
 	public void test1() {
 		ClassPathResource resource = new ClassPathResource("applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(resource);
-		T1Controller t1Controller = (T1Controller) factory.getBean("t1Controller");
+		T3Controller t1Controller = (T3Controller) factory.getBean("t1Controller");
 //		T1Service t1Service = (T1Service) factory.getBean("t1Service");
 		System.out.println(t1Controller);
 	}

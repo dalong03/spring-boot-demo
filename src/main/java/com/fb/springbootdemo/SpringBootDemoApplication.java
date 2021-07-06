@@ -8,8 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 
-@EnableJpaAuditing
-@MapperScan("com.fb.springbootdemo.repository")
+//@EnableJpaAuditing
 @SpringBootApplication
 public class SpringBootDemoApplication {
 

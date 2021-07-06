@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class SimpleConsumerListener {
 	private final static Logger logger = LoggerFactory.getLogger(SimpleConsumerListener.class);
 	private final CountDownLatch latch1 = new CountDownLatch(1);

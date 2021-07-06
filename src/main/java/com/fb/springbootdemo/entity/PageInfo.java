@@ -1,4 +1,4 @@
-package com.fb.springbootdemo.model;
+package com.fb.springbootdemo.entity;
 
 public class PageInfo {
 	private Integer startIndex = 1;

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("t2")
-public class T2Controller {
+@RequestMapping("t4")
+public class T4Controller {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String jsonp(HttpServletRequest req, HttpServletResponse res) {
