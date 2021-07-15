@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/template")
-public class TemplateController {
-	private Logger log = LoggerFactory.getLogger(TemplateController.class);
+public class Z_ExcelController {
+	private Logger log = LoggerFactory.getLogger(Z_ExcelController.class);
 
 	@RequestMapping("/resume")
 	public void downloadExcelTemplate(HttpServletResponse response) throws Exception {
